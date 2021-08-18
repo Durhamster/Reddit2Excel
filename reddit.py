@@ -1,16 +1,22 @@
 import os
-from os import environ
 from time import sleep, time
 from datetime import datetime
 import sys
 import praw
 import pandas as pd
 from tqdm import tqdm
+from dotenv import load_dotenv
 
+# Loads .env file
+load_dotenv()
+
+# Creates directory for scraped data if it does not exist
+if not os.path.exists("ScrapedData"):
+    os.makedirs("ScrapedData")
 
 # --- Functions go here ---
 
-#Converts seconds at the end to show how long the scrapeing process took.
+# Converts seconds at the end to show how long the scrapeing process took.
 def convert_time(seconds):
     seconds = seconds % (24 * 3600)
     hour = seconds // 3600
@@ -20,7 +26,8 @@ def convert_time(seconds):
 
     return "%d:%02d:%02d" % (hour, minutes, seconds)
 
-#Load a text file as a list.
+
+# Load a text file as a list.
 def load(file):
     try:
         with open(file) as in_file:
@@ -34,14 +41,16 @@ def load(file):
         )
         sys.exit(1)
 
+
 # returns dates in a readable format
 def get_date(created):
     return datetime.fromtimestamp(created)
 
+
 # searches by keyword
 def keysearch(keyword):
     for submission in allsubs.search(
-        keyword, sort="top", syntax="lucene", time_filter=datatime, limit=30
+        keyword, sort="top", syntax="lucene", time_filter=datatime, limit=100
     ):
         reddit_dict["title"].append(submission.title)
         reddit_dict["subreddit"].append(submission.subreddit)
@@ -51,21 +60,20 @@ def keysearch(keyword):
         reddit_dict["post url"].append("https://www.reddit.com/" + str(submission.id))
         reddit_dict["url"].append(submission.url)
         reddit_dict["created"].append(submission.created)
-        reddit_dict["engagement"].append(submission.score + submission.num_comments)
-        reddit_dict["code"].append(" ")
     sleep(2)
+
 
 # formats spreadsheet
 def formatsheet(df):
     # Setup writer and options
-    writer = pd.ExcelWriter(
-        reddit_file, engine="xlsxwriter", options={"strings_to_urls": False}
-    )
+    writer = pd.ExcelWriter(reddit_file, engine="xlsxwriter")
+    print("\nWriting excel file...\n")
     df.to_excel(writer, sheet_name=file_name, encoding="utf-8", index=False)
+    print("\nFormatting excel file...\n")
     workbook = writer.book
     worksheet = writer.sheets[file_name]
     worksheet.freeze_panes(1, 0)
-    worksheet.autofilter("A1:J1")
+    worksheet.autofilter("A1:H1")
 
     # Formats
     top_row = workbook.add_format(
@@ -82,8 +90,6 @@ def formatsheet(df):
     worksheet.set_column("F:F", 16)
     worksheet.set_column("G:G", 16)
     worksheet.set_column("H:H", 18)
-    worksheet.set_column("I:I", 16, num_format)
-    worksheet.set_column("J:J", 18)
 
     # Sets the top row/header font and color
     for col_num, value in enumerate(df.columns.values):
@@ -91,8 +97,9 @@ def formatsheet(df):
 
     writer.save()
 
+
 # Fetching the keywords we will be searching and subreddits we want filtered
-keywords = load("Keywords&Lists/reddit_keywords.txt")
+keywords = load("Keywords&Lists/keywords.txt")
 filtered_subreddits = load("Keywords&Lists/filtered_subreddits.txt")
 
 # Excel file name
@@ -114,7 +121,7 @@ reddit_time = " "
 while reddit_time not in (range(1, 6)):
     reddit_time = int(
         input(
-            "How far back to do you want to fetch data for?:\n 1) Day\n 2) Week\n 3) Month\n 4) Year\n 5) All Time\n"
+            "\nHow far back to do you want to fetch data for?:\n 1) Day\n 2) Week\n 3) Month\n 4) Year\n 5) All Time\n"
         )
     )
     if reddit_time in (range(1, 6)):
@@ -127,17 +134,17 @@ datatime = time_list[reddit_time - 1]
 
 if datatime != "all":
     print(
-        f"Scraping the past {datatime} on reddit for {(len(keywords))} keywords and phrases...\n"
+        f"\nScraping the past {datatime} on reddit for {(len(keywords))} keywords and phrases...\n"
     )
 else:
     print(
-        f"Scraping for all time on reddit for {(len(keywords))} keywords and phrases...\n"
+        f"\nScraping for all time on reddit for {(len(keywords))} keywords and phrases...\n"
     )
 
 # Gets API information
-client_id = environ.get("client_id")
-client_secret = environ.get("client_secret")
-user_agent = environ.get("user_agent")
+client_id = os.getenv("client_id")
+client_secret = os.getenv("client_secret")
+user_agent = os.getenv("user_agent")
 
 # API Information
 reddit = praw.Reddit(
@@ -157,8 +164,6 @@ reddit_dict = {
     "post url": [],
     "url": [],
     "created": [],
-    "engagement": [],
-    "code": [],
 }
 
 # Searches all the keywords and displays TQDM progress bar
@@ -176,11 +181,9 @@ df["created"] = df["created"].apply(get_date)
 for filtered_subreddit in filtered_subreddits:
     df.drop(df[df["subreddit"] == filtered_subreddit].index, inplace=True)
 
-# Drop all rows with less than 50 engagment
-print("Cleaning the data...\n")
-df.drop(df[df["engagement"] <= 50].index, inplace=True)
+print("\nCleaning the data...\n")
 df.drop_duplicates(subset=["post url"], keep="first", inplace=True)
-sorted_df = df.sort_values(by=["engagement"], ascending=False)
+sorted_df = df.sort_values(by=["score"], ascending=False)
 
 formatsheet(sorted_df)
 print("Job completed in", convert_time(round(time() - start_time, 2)))
@@ -191,5 +194,7 @@ opensheet = input("Do you want to open the excel file? (y or n): \n").lower()
 
 if opensheet == "y":
     os.startfile(f"{reddit_file}")
+    print("\n Opening file...\n")
+    sleep(5)
 else:
     pass

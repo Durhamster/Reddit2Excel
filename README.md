@@ -9,6 +9,7 @@
 
 A simple tool to scrape a list of keywords from Reddit into a neatly formatted .xlsx file.
 
+
 # Installation
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the required libraries.
 
@@ -18,7 +19,7 @@ pip install -r requirements.txt
 
 Obtain Developer Keys for reddit and Twitter.
 
-### To Obtain a Reddit Developer Key
+# Obtaining a Reddit Developer Key
 
 > If you do not have a Reddit account you must first sign up for one.
 
@@ -30,9 +31,35 @@ The redirect URI will be used to get your refresh token.
 5. Once you click on “create app”, you will get a box showing you your client_id and client_secrets.
 6. In the folder containing this README file (*the main folder for this project*)
     - Open the .env file and enter the client id and secret like the following
- ```bash
+```bash
 client_id = "YourClientIDHere"
 client_secret = "YourClientSecretHere"
 user_agent = "YourAppNameHere"
 ```
 7. Save the file.
+
+
+# Search Keywords & Phrases
+
+To change the list of phrases and keywords, open the keywords.txt file under the Keywords&Lists directory.
+
+Keywords and phrases must be similar like this:
+
+```bash
+This is an exmaple phrase
+KeywordExample
+YouGetTheIdea
+```
+
+
+# Filtering Subreddits
+
+You can filter out results from specific subreddits by opening the filtered_subreddits.txt file under the Keywords&Lists directory.
+
+List the undesired subreddits like this:
+
+```bash
+exampleSubreddit
+UGetTheIdea
+IhOpe
+```
