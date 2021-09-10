@@ -17,7 +17,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the req
 pip install -r requirements.txt
 ```
 
-Obtain Developer Keys for reddit and Twitter.
+Obtain Developer Keys for Reddit.
 
 # Obtaining a Reddit Developer Key
 
@@ -46,7 +46,7 @@ To change the list of phrases and keywords, open the keywords.txt file under the
 Keywords and phrases must be similar like this:
 
 ```bash
-This is an exmaple phrase
+This is an example phrase
 KeywordExample
 YouGetTheIdea
 ```
