@@ -14,8 +14,6 @@ load_dotenv()
 if not os.path.exists("ScrapedData"):
     os.makedirs("ScrapedData")
 
-# --- Functions go here ---
-
 # Converts seconds at the end to show how long the scrapeing process took.
 def convert_time(seconds):
     seconds = seconds % (24 * 3600)
