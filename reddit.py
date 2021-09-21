@@ -1,11 +1,12 @@
 import os
-from time import sleep, time
-from datetime import datetime
-import sys
-import praw
 import pandas as pd
-from tqdm import tqdm
+import praw
+import sys
+
+from datetime import datetime
 from dotenv import load_dotenv
+from time import sleep, time
+from tqdm import tqdm
 
 # Loads .env file
 load_dotenv()
@@ -13,6 +14,7 @@ load_dotenv()
 # Creates directory for scraped data if it does not exist
 if not os.path.exists("ScrapedData"):
     os.makedirs("ScrapedData")
+
 
 # Converts seconds at the end to show how long the scrapeing process took.
 def convert_time(seconds):
@@ -40,15 +42,15 @@ def load(file):
         sys.exit(1)
 
 
-# returns dates in a readable format
+# Returns dates in a readable format
 def get_date(created):
     return datetime.fromtimestamp(created)
 
 
-# searches by keyword
+# Searches by keyword
 def keysearch(keyword):
     for submission in allsubs.search(
-        keyword, sort="top", syntax="lucene", time_filter=datatime, limit=100
+        keyword, sort="top", syntax="lucene", time_filter=data_time, limit=100
     ):
         reddit_dict["title"].append(submission.title)
         reddit_dict["subreddit"].append(submission.subreddit)
@@ -61,7 +63,7 @@ def keysearch(keyword):
     sleep(2)
 
 
-# formats spreadsheet
+# Formats spreadsheet
 def formatsheet(df):
     # Setup writer and options
     writer = pd.ExcelWriter(reddit_file, engine="xlsxwriter")
@@ -76,7 +78,7 @@ def formatsheet(df):
     # Formats
     top_row = workbook.add_format(
         {"bg_color": "black", "font_color": "white"}
-    )  # sets the top row colors
+    )  # Sets the top row colors
     num_format = workbook.add_format({"num_format": "#,##0"})
 
     # Sets the worksheet to the proper formats and column widths
@@ -128,11 +130,11 @@ while reddit_time not in (range(1, 6)):
         continue
 
 time_list = ["day", "week", "month", "year", "all"]
-datatime = time_list[reddit_time - 1]
+data_time = time_list[reddit_time - 1]
 
-if datatime != "all":
+if data_time != "all":
     print(
-        f"\nScraping the past {datatime} on reddit for {(len(keywords))} keywords and phrases...\n"
+        f"\nScraping the past {data_time} on reddit for {(len(keywords))} keywords and phrases...\n"
     )
 else:
     print(
@@ -193,6 +195,3 @@ opensheet = input("Do you want to open the excel file? (y or n): \n").lower()
 if opensheet == "y":
     os.startfile(f"{reddit_file}")
     print("\n Opening file...\n")
-    sleep(5)
-else:
-    pass

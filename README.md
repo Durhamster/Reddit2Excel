@@ -17,7 +17,7 @@ pip install -r requirements.txt
 
 Obtain Developer Keys for Reddit.
 
-## Obtaining a Reddit Developer Key
+# Obtaining a Reddit Developer Key
 
 > If you do not have a Reddit account you must first sign up for one.
 
@@ -40,6 +40,8 @@ user_agent = "YourAppNameHere"
 
 # Search Keywords & Phrases
 
+## Adding/Removing Keywords & Phrases
+
 To change the list of phrases and keywords, open the keywords.txt file under the Keywords&Lists directory.
 
 Keywords and phrases must be similar like this:
@@ -49,6 +51,19 @@ This is an example phrase
 KeywordExample
 YouGetTheIdea
 ```
+## Changing the Number of Posts Scraped
+
+By default this script will scrape the top 100 posts for each keyword or phrase for the chosen time period.
+To adjust this you can adjust the limit under the keysearch function.
+
+```bash
+def keysearch(keyword):
+    for submission in allsubs.search(
+        keyword, sort="top", syntax="lucene", time_filter=data_time, limit=100):
+```
+Doing so may result in hitting the API request limit. The maximum allowed is 1000, which can be achieved by setting limit to <i>none</i>.
+
+More information on this can be found in the [praw api docs](https://praw.readthedocs.io/en/v7.4.0/getting_started/quick_start.html?highlight=request%20limit).
 
 # Filtering Subreddits
 
