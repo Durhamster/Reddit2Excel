@@ -54,10 +54,10 @@ YouGetTheIdea
 ## Changing the Number of Posts Scraped
 
 By default this script will scrape the top 100 posts for each keyword or phrase for the chosen time period.
-To adjust this you can adjust the limit under the keysearch function.
+To adjust this you can adjust the limit under the keyword_search function.
 
 ```bash
-def keysearch(keyword):
+def keyword_search(keyword):
     for submission in allsubs.search(
         keyword, sort="top", syntax="lucene", time_filter=data_time, limit=100):
 ```
