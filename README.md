@@ -7,8 +7,6 @@ A simple tool to scrape a list of keywords from Reddit into a neatly formatted .
 
 ## Installation
 
-------
-
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the required libraries.
 
 ```bash
@@ -18,8 +16,6 @@ pip install -r requirements.txt
 Obtain Developer Keys for Reddit.
 
 ## Obtaining a Reddit Developer Key
-
-------
 
 > If you do not have a Reddit account you must first sign up for one.
 
@@ -39,8 +35,6 @@ user_agent = "YourAppNameHere"
 ```
 
 ## Search Keywords & Phrases
-
-------
 
 ### Adding/Removing Keywords & Phrases
 
@@ -70,8 +64,6 @@ Doing so may result in hitting the API request limit. The maximum allowed is 100
 More information on this can be found in the [praw api docs](https://praw.readthedocs.io/en/v7.4.0/getting_started/quick_start.html?highlight=request%20limit).
 
 ## Filtering Subreddits
-
-------
 
 You can filter out results from specific subreddits by opening the filtered_subreddits.txt file under the Keywords&Lists directory.
 
