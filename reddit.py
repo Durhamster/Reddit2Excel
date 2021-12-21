@@ -104,7 +104,7 @@ def format_sheet(df):
     )  # Sets the top row colors
     num_format = workbook.add_format({"num_format": "#,##0"})
 
-    # Sets the worksheet to the proper formats and column widths
+    # wWorksheet formats and column widths
     worksheet.set_column("A:A", 53.5)
     worksheet.set_column("B:B", 20)
     worksheet.set_column("C:C", 17.5)
@@ -172,7 +172,7 @@ if __name__ == "__main__":
             f"\nScraping for all time on reddit for {(len(keywords))} keywords and phrases...\n"
         )
 
-    # Gets API information
+    # API information
     client_id = os.getenv("client_id")
     client_secret = os.getenv("client_secret")
     user_agent = os.getenv("user_agent")
@@ -181,7 +181,6 @@ if __name__ == "__main__":
         client_id=client_id, client_secret=client_secret, user_agent=user_agent
     )
 
-    # All Subreddits
     allsubs = reddit.subreddit("all")
 
     # Dict to put all our data
@@ -203,7 +202,6 @@ if __name__ == "__main__":
                 keyword_search(terms)
                 pbar.update(1)
 
-    # Creates DataFrame
     df = pd.DataFrame(reddit_dict)
     df["created"] = df["created"].apply(get_date)
 
