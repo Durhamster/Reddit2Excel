@@ -1,6 +1,6 @@
 # Reddit2Excel
 
-![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/durhamster/Reddit2Excel?style=flat-square)
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/durhamster/Reddit2Excel?style=for-the-badge)
 ![License](https://img.shields.io/github/license/Durhamster/Reddit2Excel?style=for-the-badge)
 
 A simple tool to scrape a list of keywords from Reddit into a neatly formatted .xlsx file.
