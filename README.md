@@ -1,6 +1,6 @@
 # Reddit2Excel
 
-![Python Version](https://img.shields.io/pypi/pyversions/praw?style=for-the-badge)
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/durhamster/Reddit2Excel?style=flat-square)
 ![License](https://img.shields.io/github/license/Durhamster/Reddit2Excel?style=for-the-badge)
 
 A simple tool to scrape a list of keywords from Reddit into a neatly formatted .xlsx file.
@@ -59,7 +59,7 @@ def keyword_search(keyword):
         keyword, sort="top", syntax="lucene", time_filter=data_time, limit=100):
 ```
 
-Doing so may result in hitting the API request limit. The maximum allowed is 1000, which can be achieved by setting limit to *none*.
+Doing so may result in hitting the API request limit. The maximum allowed is 1000, which can be achieved by setting limit to "none".
 
 More information on this can be found in the [praw api docs](https://praw.readthedocs.io/en/v7.4.0/getting_started/quick_start.html?highlight=request%20limit).
 

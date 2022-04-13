@@ -15,8 +15,12 @@ import sys
 
 from datetime import datetime
 from dotenv import load_dotenv
+from rich import print
+from rich.console import Console
 from time import sleep, time
 from tqdm import tqdm
+
+console = Console()
 
 
 def convert_time(seconds):
@@ -134,13 +138,13 @@ if __name__ == "__main__":
     filtered_subreddits = load_keywords("Keywords&Lists/filtered_subreddits.txt")
 
     # Excel file name
-    file_name = input(
-        "\nPlease enter what you want the file to be called. (Do not include .xlsx):\n"
+    file_name = console.input(
+        "\nPlease enter what you want the file to be called. [red](Do not include .xlsx)[/red]:\n"
     )
 
     while "." in file_name:
-        file_name = input(
-            "\nPlease enter what you want the file to be called. (Do not include .xlsx):\n"
+        file_name = console.input(
+            "\nPlease enter what you want the file to be called. [red](Do not include .xlsx)[/red]:\n"
         )
         if "." not in file_name:
             continue
@@ -151,7 +155,7 @@ if __name__ == "__main__":
     reddit_time = " "
     while reddit_time not in (range(1, 6)):
         reddit_time = int(
-            input(
+            console.input(
                 "\nHow far back to do you want to fetch data for?:\n 1) Day\n 2) Week\n 3) Month\n 4) Year\n 5) All Time\n"
             )
         )
@@ -196,7 +200,7 @@ if __name__ == "__main__":
     }
 
     # Searches all the keywords and displays TQDM progress bar
-    with tqdm(total=len(keywords), file=sys.stdout) as pbar:
+    with tqdm(total=len(keywords), file=sys.stdout, colour="GREEN") as pbar:
         for i in range(1):
             for terms in keywords:
                 keyword_search(terms)
@@ -218,7 +222,11 @@ if __name__ == "__main__":
     print(f"Data saved to {reddit_file}\n")
 
     # Prompts user to open the cleaned file
-    opensheet = input("Do you want to open the excel file? (y or n): \n").lower()
+    opensheet = console.input(
+        "Do you want to open the excel file? [cyan](y or n)[/cyan]: \n"
+    ).lower()
+    while (opensheet != "y") and (opensheet != "n"):
+        opensheet = console.input("[red]Please choose y or n: [/red]\n").lower()
 
     if opensheet == "y":
         os.startfile(f"{reddit_file}")
