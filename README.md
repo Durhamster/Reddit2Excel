@@ -1,6 +1,6 @@
 # Reddit2Excel
 
-![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/durhamster/Reddit2Excel?style=for-the-badge)
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/Durhamster/Reddit2Excel?color=blue&style=for-the-badge)
 ![License](https://img.shields.io/github/license/Durhamster/Reddit2Excel?style=for-the-badge)
 
 A simple tool to scrape a list of keywords from Reddit into a neatly formatted .xlsx file.
@@ -13,7 +13,13 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the req
 pip install -r requirements.txt
 ```
 
-Obtain Developer Keys for Reddit.
+or
+
+Using [pipenv](https://pipenv.pypa.io/en/latest/):
+
+```bash
+pipenv install
+```
 
 ## Obtaining a Reddit Developer Key
 
