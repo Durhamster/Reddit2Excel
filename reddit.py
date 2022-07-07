@@ -1,7 +1,7 @@
 """Reddit to Excel
 This script  scrape a list of keywords from Reddit into a neatly formatted .xlsx file.
 This file contains the following functions:
-    * convert_time - Converts seconds at the end to show how long the scrapeing and formatting process took
+    * convert_time - Converts seconds at the end to show how long the scraping and formatting process took
     * load_keywords - Loads a text file as a list
     * get_date - Returns dates in a readable format
     * keyword_search - Searches reddit for specified keyword or phrase
@@ -24,7 +24,7 @@ console = Console()
 
 
 def convert_time(seconds):
-    """Converts seconds at the end to show how long the scrapeing and formatting process took
+    """Converts seconds at the end to show how long the scraping and formatting process took
     ----------
     seconds : raw seconds from time() - start_time
     """
@@ -89,7 +89,7 @@ def keyword_search(keyword):
 def format_sheet(df):
     """Formats the scraped data in Excel
     ----------
-    df = dataframe containing data scraped from reddit
+    df = DataFrame containing data scraped from reddit
     """
 
     # Setup writer and options
@@ -151,7 +151,7 @@ if __name__ == "__main__":
 
     reddit_file = f"{os.getcwd()}/ScrapedData/{file_name}.xlsx"
 
-    # Prompts user for timeframe to grab data (day, week, month, year, or all time)
+    # Prompts user for time frame to grab data (day, week, month, year, or all time)
     reddit_time = " "
     while reddit_time not in (range(1, 6)):
         reddit_time = int(
@@ -218,7 +218,7 @@ if __name__ == "__main__":
     sorted_df = df.sort_values(by=["score"], ascending=False)
 
     format_sheet(sorted_df)
-    print("Job completed in", convert_time(round(time() - start_time, 2)))
+    print("Job completed in", convert_time(round(time() - start_time, 2)), " ⏰")
     print(f"Data saved to {reddit_file}\n")
 
     # Prompts user to open the cleaned file
