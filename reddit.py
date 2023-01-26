@@ -72,7 +72,7 @@ def keyword_search(keyword):
     keyword : the keyword or phrase to search reddit for
     """
 
-    for submission in allsubs.search(
+    for submission in all_subs.search(
         keyword, sort="top", syntax="lucene", time_filter=data_time, limit=100
     ):
         reddit_dict["title"].append(submission.title)
@@ -185,7 +185,7 @@ if __name__ == "__main__":
         client_id=client_id, client_secret=client_secret, user_agent=user_agent
     )
 
-    allsubs = reddit.subreddit("all")
+    all_subs = reddit.subreddit("all")
 
     # Dict to put all our data
     reddit_dict = {
@@ -222,12 +222,12 @@ if __name__ == "__main__":
     print(f"Data saved to {reddit_file}\n")
 
     # Prompts user to open the cleaned file
-    opensheet = console.input(
+    open_sheet = console.input(
         "Do you want to open the excel file? [cyan](y or n)[/cyan]: \n"
     ).lower()
-    while (opensheet != "y") and (opensheet != "n"):
-        opensheet = console.input("[red]Please choose y or n: [/red]\n").lower()
+    while (open_sheet != "y") and (open_sheet != "n"):
+        open_sheet = console.input("[red]Please choose y or n: [/red]\n").lower()
 
-    if opensheet == "y":
+    if open_sheet == "y":
         os.startfile(f"{reddit_file}")
         print("\n Opening file...\n")
